@@ -1,5 +1,3 @@
-"use client"
-
 import { motion } from "framer-motion"
 import { Scissors, Sparkles, Calendar, Settings } from "lucide-react"
 

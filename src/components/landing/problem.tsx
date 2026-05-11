@@ -1,5 +1,3 @@
-"use client"
-
 import { motion } from "framer-motion"
 import { Clock, CalendarX, Users, AlertTriangle, DollarSign, Headphones } from "lucide-react"
 

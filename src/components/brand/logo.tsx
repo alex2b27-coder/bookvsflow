@@ -1,8 +1,4 @@
-"use client"
-
 import { cn } from "@/lib/utils"
-import Image from "next/image"
-
 interface LogoProps {
   className?: string
   showText?: boolean
@@ -34,7 +30,7 @@ export function Logo({
 
   return (
     <div className={cn("flex items-center gap-3", className)}>
-      <Image
+      <img
         src={logoSrc}
         alt="BookVSFlow Logo"
         width={sizeConfig.icon}
@@ -66,7 +62,7 @@ export function LogoIcon({
     : "/logo-dark.png"
 
   return (
-    <Image
+    <img
       src={logoSrc}
       alt="BookVSFlow Logo"
       width={size}

@@ -1,6 +1,3 @@
-"use client"
-
-import Link from "next/link"
 import { motion } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import { LogoIcon } from "@/components/brand/logo"
@@ -86,15 +83,15 @@ export function Hero() {
               className="flex flex-col sm:flex-row items-start gap-4"
             >
               <Button size="lg" asChild className="bg-primary text-primary-foreground hover:bg-primary/90 h-12 px-8 text-base">
-                <Link href="/salon-questionnaire">
+                <a href="/salon-questionnaire">
                   Start Free Trial
                   <ArrowRight className="ml-2 w-4 h-4" />
-                </Link>
+                </a>
               </Button>
               <Button variant="outline" size="lg" asChild className="border-accent text-accent hover:bg-accent/10 h-12 px-8 text-base">
-                <Link href="https://t.me/bookvsflow" target="_blank" rel="noopener noreferrer">
+                <a href="https://t.me/bookvsflow" target="_blank" rel="noopener noreferrer">
                   Try Demo
-                </Link>
+                </a>
               </Button>
             </motion.div>
           </motion.div>

@@ -1,6 +1,3 @@
-"use client"
-
-import Link from "next/link"
 import { motion } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import { LogoIcon } from "@/components/brand/logo"
@@ -36,10 +33,10 @@ export function CTA() {
                 asChild 
                 className="w-full sm:w-auto bg-accent text-accent-foreground hover:bg-accent/90 h-12 px-8"
               >
-                <Link href="/salon-questionnaire">
+                <a href="/salon-questionnaire">
                   Start Free Trial
                   <ArrowRight className="ml-2 w-4 h-4" />
-                </Link>
+                </a>
               </Button>
               <Button 
                 size="lg" 
@@ -47,9 +44,9 @@ export function CTA() {
                 asChild 
                 className="w-full sm:w-auto border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground/10 h-12 px-8"
               >
-                <Link href="https://t.me/bookvsflow" target="_blank" rel="noopener noreferrer">
+                <a href="https://t.me/bookvsflow" target="_blank" rel="noopener noreferrer">
                   Try Demo Bot
-                </Link>
+                </a>
               </Button>
             </div>
 

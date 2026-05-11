@@ -1,7 +1,4 @@
-"use client"
-
 import { useState } from "react"
-import Link from "next/link"
 import { motion, AnimatePresence } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import { Logo } from "@/components/brand/logo"
@@ -26,32 +23,32 @@ export function Header() {
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 lg:h-20">
           {/* Logo */}
-          <Link href="/" className="flex items-center">
+          <a href="/" className="flex items-center">
             <Logo size="sm" />
-          </Link>
+          </a>
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-8">
             {navLinks.map((link) => (
-              <Link
+              <a
                 key={link.href}
                 href={link.href}
                 className="text-muted-foreground hover:text-foreground transition-colors text-sm font-medium"
               >
                 {link.label}
-              </Link>
+              </a>
             ))}
           </div>
 
           {/* Desktop CTA */}
           <div className="hidden md:flex items-center gap-3">
             <Button variant="ghost" size="sm" asChild>
-              <Link href="/salon-questionnaire">Get Started</Link>
+              <a href="/salon-questionnaire">Get Started</a>
             </Button>
             <Button size="sm" asChild className="bg-accent text-accent-foreground hover:bg-accent/90">
-              <Link href="https://t.me/bookvsflow" target="_blank" rel="noopener noreferrer">
+              <a href="https://t.me/bookvsflow" target="_blank" rel="noopener noreferrer">
                 @bookvsflow
-              </Link>
+              </a>
             </Button>
           </div>
 
@@ -77,23 +74,23 @@ export function Header() {
             >
               <div className="py-4 space-y-3">
                 {navLinks.map((link) => (
-                  <Link
+                  <a
                     key={link.href}
                     href={link.href}
                     onClick={() => setIsMenuOpen(false)}
                     className="block py-2 text-muted-foreground hover:text-foreground transition-colors text-sm font-medium"
                   >
                     {link.label}
-                  </Link>
+                  </a>
                 ))}
                 <div className="pt-3 flex flex-col gap-2">
                   <Button variant="outline" size="sm" asChild className="w-full">
-                    <Link href="/salon-questionnaire">Get Started</Link>
+                    <a href="/salon-questionnaire">Get Started</a>
                   </Button>
                   <Button size="sm" asChild className="w-full bg-accent text-accent-foreground hover:bg-accent/90">
-                    <Link href="https://t.me/bookvsflow" target="_blank" rel="noopener noreferrer">
+                    <a href="https://t.me/bookvsflow" target="_blank" rel="noopener noreferrer">
                       @bookvsflow
-                    </Link>
+                    </a>
                   </Button>
                 </div>
               </div>

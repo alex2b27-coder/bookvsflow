@@ -1,4 +1,3 @@
-import Link from "next/link"
 import { Logo } from "@/components/brand/logo"
 
 const footerLinks = {
@@ -28,9 +27,9 @@ export function Footer() {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 lg:gap-12">
           {/* Brand */}
           <div className="col-span-2 md:col-span-1">
-            <Link href="/">
+            <a href="/">
               <Logo size="sm" variant="light" />
-            </Link>
+            </a>
             <p className="mt-4 text-sm text-primary-foreground/60 max-w-xs">
               Smart Booking System for Service Professionals. Telegram-first automation for modern salons.
             </p>
@@ -58,12 +57,12 @@ export function Footer() {
             <ul className="space-y-3">
               {footerLinks.product.map((link) => (
                 <li key={link.label}>
-                  <Link
+                  <a
                     href={link.href}
                     className="text-sm text-primary-foreground/60 hover:text-accent transition-colors"
                   >
                     {link.label}
-                  </Link>
+                  </a>
                 </li>
               ))}
             </ul>
@@ -75,12 +74,12 @@ export function Footer() {
             <ul className="space-y-3">
               {footerLinks.company.map((link) => (
                 <li key={link.label}>
-                  <Link
+                  <a
                     href={link.href}
                     className="text-sm text-primary-foreground/60 hover:text-accent transition-colors"
                   >
                     {link.label}
-                  </Link>
+                  </a>
                 </li>
               ))}
             </ul>
@@ -92,12 +91,12 @@ export function Footer() {
             <ul className="space-y-3">
               {footerLinks.legal.map((link) => (
                 <li key={link.label}>
-                  <Link
+                  <a
                     href={link.href}
                     className="text-sm text-primary-foreground/60 hover:text-accent transition-colors"
                   >
                     {link.label}
-                  </Link>
+                  </a>
                 </li>
               ))}
             </ul>
