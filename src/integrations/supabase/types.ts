@@ -14,7 +14,78 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      leads: {
+        Row: {
+          additional_comments: string | null
+          biggest_challenge: string | null
+          business_purpose: string | null
+          business_type: string
+          city: string
+          created_at: string
+          current_booking_system: string | null
+          email: string
+          email_sent: boolean | null
+          id: string
+          monthly_clients: string | null
+          need_financial_reports: boolean | null
+          need_online_payments: boolean | null
+          number_of_services: string
+          number_of_staff: string
+          owner_name: string
+          phone: string
+          preferred_contact: string
+          salon_name: string
+          use_online_booking: string | null
+          why_need_it: string | null
+        }
+        Insert: {
+          additional_comments?: string | null
+          biggest_challenge?: string | null
+          business_purpose?: string | null
+          business_type: string
+          city: string
+          created_at?: string
+          current_booking_system?: string | null
+          email: string
+          email_sent?: boolean | null
+          id?: string
+          monthly_clients?: string | null
+          need_financial_reports?: boolean | null
+          need_online_payments?: boolean | null
+          number_of_services: string
+          number_of_staff: string
+          owner_name: string
+          phone: string
+          preferred_contact: string
+          salon_name: string
+          use_online_booking?: string | null
+          why_need_it?: string | null
+        }
+        Update: {
+          additional_comments?: string | null
+          biggest_challenge?: string | null
+          business_purpose?: string | null
+          business_type?: string
+          city?: string
+          created_at?: string
+          current_booking_system?: string | null
+          email?: string
+          email_sent?: boolean | null
+          id?: string
+          monthly_clients?: string | null
+          need_financial_reports?: boolean | null
+          need_online_payments?: boolean | null
+          number_of_services?: string
+          number_of_staff?: string
+          owner_name?: string
+          phone?: string
+          preferred_contact?: string
+          salon_name?: string
+          use_online_booking?: string | null
+          why_need_it?: string | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
