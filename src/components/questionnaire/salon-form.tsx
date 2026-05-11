@@ -9,6 +9,7 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Card } from "@/components/ui/card"
 import { CheckCircle2, Loader2, ArrowRight, ArrowLeft } from "lucide-react"
+import { supabase } from "@/integrations/supabase/client"
 
 interface FormData {
   salonName: string
@@ -24,6 +25,10 @@ interface FormData {
   needOnlinePayments: boolean
   needFinancialReports: boolean
   preferredContact: string
+  whyNeedIt: string
+  businessPurpose: string
+  biggestChallenge: string
+  monthlyClients: string
   additionalComments: string
 }
 
@@ -51,6 +56,23 @@ const serviceOptions = [
   { value: "20+", label: "More than 20" },
 ]
 
+const monthlyClientsOptions = [
+  { value: "<50", label: "Less than 50" },
+  { value: "50-150", label: "50 - 150" },
+  { value: "150-400", label: "150 - 400" },
+  { value: "400-1000", label: "400 - 1,000" },
+  { value: "1000+", label: "More than 1,000" },
+]
+
+const challengeOptions = [
+  { value: "no-shows", label: "Too many no-shows" },
+  { value: "manual-booking", label: "Manual booking takes too much time" },
+  { value: "lost-clients", label: "Losing clients to competitors" },
+  { value: "no-reports", label: "No clear view of revenue" },
+  { value: "scheduling-chaos", label: "Scheduling chaos & double-bookings" },
+  { value: "other", label: "Something else" },
+]
+
 const contactMethods = [
   { value: "telegram", label: "Telegram" },
   { value: "whatsapp", label: "WhatsApp" },
@@ -76,10 +98,14 @@ export function SalonQuestionnaireForm() {
     needOnlinePayments: false,
     needFinancialReports: false,
     preferredContact: "",
+    whyNeedIt: "",
+    businessPurpose: "",
+    biggestChallenge: "",
+    monthlyClients: "",
     additionalComments: "",
   })
 
-  const totalSteps = 3
+  const totalSteps = 4
 
   const updateFormData = (field: keyof FormData, value: string | boolean) => {
     setFormData((prev) => ({ ...prev, [field]: value }))
@@ -87,22 +113,40 @@ export function SalonQuestionnaireForm() {
 
   const handleSubmit = async () => {
     setIsSubmitting(true)
-    
     try {
-      const response = await fetch("/api/lead", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
+      const { error } = await supabase.from("leads").insert({
+        salon_name: formData.salonName,
+        owner_name: formData.ownerName,
+        phone: formData.phone,
+        email: formData.email,
+        city: formData.city,
+        business_type: formData.businessType,
+        number_of_staff: formData.numberOfStaff,
+        number_of_services: formData.numberOfServices,
+        current_booking_system: formData.currentBookingSystem || null,
+        use_online_booking: formData.useOnlineBooking || null,
+        need_online_payments: formData.needOnlinePayments,
+        need_financial_reports: formData.needFinancialReports,
+        preferred_contact: formData.preferredContact,
+        why_need_it: formData.whyNeedIt || null,
+        business_purpose: formData.businessPurpose || null,
+        biggest_challenge: formData.biggestChallenge || null,
+        monthly_clients: formData.monthlyClients || null,
+        additional_comments: formData.additionalComments || null,
       })
 
-      if (response.ok) {
-        setIsSubmitted(true)
-      } else {
-        alert("Something went wrong. Please try again.")
-      }
-    } catch {
+      if (error) throw error
+
+      // Fire-and-forget notification to bookvsflow@gmail.com (handled server-side once email sender is verified)
+      fetch("/api/lead", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      }).catch(() => {})
+
+      setIsSubmitted(true)
+    } catch (err) {
+      console.error(err)
       alert("Something went wrong. Please try again.")
     } finally {
       setIsSubmitting(false)
@@ -111,6 +155,7 @@ export function SalonQuestionnaireForm() {
 
   const canProceedStep1 = formData.salonName && formData.ownerName && formData.phone && formData.email && formData.city
   const canProceedStep2 = formData.businessType && formData.numberOfStaff && formData.numberOfServices
+  const canProceedStep3 = formData.whyNeedIt.trim().length > 3 && formData.businessPurpose.trim().length > 3 && formData.biggestChallenge && formData.monthlyClients
   const canSubmit = formData.preferredContact
 
   if (isSubmitted) {
@@ -162,11 +207,11 @@ export function SalonQuestionnaireForm() {
               transition={{ duration: 0.3 }}
             >
               <h2 className="text-xl font-semibold text-foreground mb-6">Contact Information</h2>
-              
+
               <div className="space-y-5">
                 <div className="grid sm:grid-cols-2 gap-4">
                   <div className="space-y-2">
-                    <Label htmlFor="salonName">Salon Name *</Label>
+                    <Label htmlFor="salonName">Salon / Firma Name *</Label>
                     <Input
                       id="salonName"
                       placeholder="e.g., Bella Beauty Studio"
@@ -220,10 +265,7 @@ export function SalonQuestionnaireForm() {
               </div>
 
               <div className="mt-8 flex justify-end">
-                <Button
-                  onClick={() => setCurrentStep(2)}
-                  disabled={!canProceedStep1}
-                >
+                <Button onClick={() => setCurrentStep(2)} disabled={!canProceedStep1}>
                   Continue
                   <ArrowRight className="ml-2 w-4 h-4" />
                 </Button>
@@ -240,7 +282,7 @@ export function SalonQuestionnaireForm() {
               transition={{ duration: 0.3 }}
             >
               <h2 className="text-xl font-semibold text-foreground mb-6">Business Details</h2>
-              
+
               <div className="space-y-5">
                 <div className="space-y-2">
                   <Label>Business Type *</Label>
@@ -325,10 +367,7 @@ export function SalonQuestionnaireForm() {
                   <ArrowLeft className="mr-2 w-4 h-4" />
                   Back
                 </Button>
-                <Button
-                  onClick={() => setCurrentStep(3)}
-                  disabled={!canProceedStep2}
-                >
+                <Button onClick={() => setCurrentStep(3)} disabled={!canProceedStep2}>
                   Continue
                   <ArrowRight className="ml-2 w-4 h-4" />
                 </Button>
@@ -344,8 +383,87 @@ export function SalonQuestionnaireForm() {
               exit={{ opacity: 0, x: -20 }}
               transition={{ duration: 0.3 }}
             >
+              <h2 className="text-xl font-semibold text-foreground mb-6">Tell Us About Your Goals</h2>
+
+              <div className="space-y-5">
+                <div className="space-y-2">
+                  <Label htmlFor="whyNeedIt">Why do you need BookVSFlow? *</Label>
+                  <Textarea
+                    id="whyNeedIt"
+                    placeholder="e.g., I want to stop losing time on phone bookings and reduce no-shows."
+                    rows={3}
+                    value={formData.whyNeedIt}
+                    onChange={(e) => updateFormData("whyNeedIt", e.target.value)}
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="businessPurpose">For what purpose will you use it? *</Label>
+                  <Textarea
+                    id="businessPurpose"
+                    placeholder="e.g., Take Telegram bookings 24/7, manage my team's schedule, send reminders."
+                    rows={3}
+                    value={formData.businessPurpose}
+                    onChange={(e) => updateFormData("businessPurpose", e.target.value)}
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <Label>What is your biggest challenge today? *</Label>
+                  <Select value={formData.biggestChallenge} onValueChange={(value) => updateFormData("biggestChallenge", value)}>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select your top challenge" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {challengeOptions.map((option) => (
+                        <SelectItem key={option.value} value={option.value}>
+                          {option.label}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <div className="space-y-2">
+                  <Label>How many clients do you serve per month? *</Label>
+                  <Select value={formData.monthlyClients} onValueChange={(value) => updateFormData("monthlyClients", value)}>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {monthlyClientsOptions.map((option) => (
+                        <SelectItem key={option.value} value={option.value}>
+                          {option.label}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
+
+              <div className="mt-8 flex justify-between">
+                <Button variant="outline" onClick={() => setCurrentStep(2)}>
+                  <ArrowLeft className="mr-2 w-4 h-4" />
+                  Back
+                </Button>
+                <Button onClick={() => setCurrentStep(4)} disabled={!canProceedStep3}>
+                  Continue
+                  <ArrowRight className="ml-2 w-4 h-4" />
+                </Button>
+              </div>
+            </motion.div>
+          )}
+
+          {currentStep === 4 && (
+            <motion.div
+              key="step4"
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -20 }}
+              transition={{ duration: 0.3 }}
+            >
               <h2 className="text-xl font-semibold text-foreground mb-6">Preferences & Features</h2>
-              
+
               <div className="space-y-5">
                 <div className="space-y-3">
                   <Label>What features are you interested in?</Label>
@@ -404,14 +522,11 @@ export function SalonQuestionnaireForm() {
               </div>
 
               <div className="mt-8 flex justify-between">
-                <Button variant="outline" onClick={() => setCurrentStep(2)}>
+                <Button variant="outline" onClick={() => setCurrentStep(3)}>
                   <ArrowLeft className="mr-2 w-4 h-4" />
                   Back
                 </Button>
-                <Button
-                  onClick={handleSubmit}
-                  disabled={!canSubmit || isSubmitting}
-                >
+                <Button onClick={handleSubmit} disabled={!canSubmit || isSubmitting}>
                   {isSubmitting ? (
                     <>
                       <Loader2 className="mr-2 w-4 h-4 animate-spin" />
