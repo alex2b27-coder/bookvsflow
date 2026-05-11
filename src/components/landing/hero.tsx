@@ -1,6 +1,6 @@
 import { motion } from "framer-motion"
 import { Button } from "@/components/ui/button"
-import { LogoIcon } from "@/components/brand/logo"
+import { LogoIcon, DecorativeLogo } from "@/components/brand/logo"
 import { ArrowRight, Scissors, Sparkles, Calendar, Clock, Settings } from "lucide-react"
 
 const industries = [
@@ -21,8 +21,8 @@ export function Hero() {
     <section className="relative pt-28 pb-16 lg:pt-36 lg:pb-24 overflow-hidden">
       {/* Subtle background pattern */}
       <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-1/2 right-0 -translate-y-1/2 w-[500px] h-[500px] lg:w-[700px] lg:h-[700px] opacity-20">
-          <LogoIcon className="w-full h-full" variant="dark" />
+        <div className="absolute top-1/2 right-0 -translate-y-1/2 w-[500px] h-[500px] lg:w-[700px] lg:h-[700px]">
+          <DecorativeLogo surface="light" intensity="subtle" className="w-full h-full" />
         </div>
       </div>
       

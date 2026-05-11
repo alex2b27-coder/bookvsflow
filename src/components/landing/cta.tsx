@@ -1,6 +1,6 @@
 import { motion } from "framer-motion"
 import { Button } from "@/components/ui/button"
-import { LogoIcon } from "@/components/brand/logo"
+import { DecorativeLogo } from "@/components/brand/logo"
 import { ArrowRight } from "lucide-react"
 
 export function CTA() {
@@ -15,8 +15,8 @@ export function CTA() {
           className="relative bg-primary rounded-xl p-8 sm:p-12 lg:p-16 text-center overflow-hidden"
         >
           {/* Large decorative logo */}
-          <div className="absolute top-1/2 right-8 -translate-y-1/2 w-48 h-48 lg:w-64 lg:h-64 opacity-40 pointer-events-none">
-            <LogoIcon className="w-full h-full" variant="light" />
+          <div className="absolute top-1/2 right-8 -translate-y-1/2 w-48 h-48 lg:w-64 lg:h-64 pointer-events-none">
+            <DecorativeLogo surface="dark" intensity="medium" className="w-full h-full" />
           </div>
 
           <div className="relative z-10 max-w-3xl mx-auto">
