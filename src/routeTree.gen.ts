@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as SalonQuestionnaireRouteImport } from './routes/salon-questionnaire'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ApiLeadRouteImport } from './routes/api/lead'
 
 const SalonQuestionnaireRoute = SalonQuestionnaireRouteImport.update({
   id: '/salon-questionnaire',
@@ -22,31 +23,40 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiLeadRoute = ApiLeadRouteImport.update({
+  id: '/api/lead',
+  path: '/api/lead',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/salon-questionnaire': typeof SalonQuestionnaireRoute
+  '/api/lead': typeof ApiLeadRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/salon-questionnaire': typeof SalonQuestionnaireRoute
+  '/api/lead': typeof ApiLeadRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/salon-questionnaire': typeof SalonQuestionnaireRoute
+  '/api/lead': typeof ApiLeadRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/salon-questionnaire'
+  fullPaths: '/' | '/salon-questionnaire' | '/api/lead'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/salon-questionnaire'
-  id: '__root__' | '/' | '/salon-questionnaire'
+  to: '/' | '/salon-questionnaire' | '/api/lead'
+  id: '__root__' | '/' | '/salon-questionnaire' | '/api/lead'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   SalonQuestionnaireRoute: typeof SalonQuestionnaireRoute
+  ApiLeadRoute: typeof ApiLeadRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -65,12 +75,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/lead': {
+      id: '/api/lead'
+      path: '/api/lead'
+      fullPath: '/api/lead'
+      preLoaderRoute: typeof ApiLeadRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   SalonQuestionnaireRoute: SalonQuestionnaireRoute,
+  ApiLeadRoute: ApiLeadRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
