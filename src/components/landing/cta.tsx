@@ -15,7 +15,7 @@ export function CTA() {
           className="relative bg-primary rounded-xl p-8 sm:p-12 lg:p-16 text-center overflow-hidden"
         >
           {/* Large decorative logo */}
-          <div className="absolute top-1/2 right-8 -translate-y-1/2 w-48 h-48 lg:w-64 lg:h-64 opacity-10 pointer-events-none">
+          <div className="absolute top-1/2 right-8 -translate-y-1/2 w-48 h-48 lg:w-64 lg:h-64 opacity-40 pointer-events-none">
             <LogoIcon className="w-full h-full" variant="light" />
           </div>
 
