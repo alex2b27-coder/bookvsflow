@@ -1,26 +1,48 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { Header } from "@/components/landing/header";
+import { Hero } from "@/components/landing/hero";
+import { Problem } from "@/components/landing/problem";
+import { Solution } from "@/components/landing/solution";
+import { Features } from "@/components/landing/features";
+import { HowItWorks } from "@/components/landing/how-it-works";
+import { Industries } from "@/components/landing/industries";
+import { CTA } from "@/components/landing/cta";
+import { Footer } from "@/components/landing/footer";
 
 export const Route = createFileRoute("/")({
-  component: Index,
+  head: () => ({
+    meta: [
+      { title: "BookVSFlow — Smart Booking System for Service Professionals" },
+      {
+        name: "description",
+        content:
+          "All-in-one booking solution for any type of service business. More bookings. Fewer no-shows. Smarter business.",
+      },
+      { property: "og:title", content: "BookVSFlow — Smart Booking System for Service Professionals" },
+      {
+        property: "og:description",
+        content:
+          "All-in-one booking solution for any type of service business. More bookings. Fewer no-shows. Smarter business.",
+      },
+    ],
+  }),
+  component: HomePage,
 });
 
-// IMPORTANT: Replace this placeholder. For sites with multiple pages (About, Services, Contact, etc.),
-// create separate route files (about.tsx, services.tsx, contact.tsx) — don't put all pages in this file.
-function PlaceholderIndex() {
+function HomePage() {
   return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
-    </div>
+    <>
+      <Header />
+      <main>
+        <Hero />
+        <Problem />
+        <Solution />
+        <Features />
+        <HowItWorks />
+        <Industries />
+        <CTA />
+      </main>
+      <Footer />
+    </>
   );
-}
-
-function Index() {
-  return <PlaceholderIndex />;
 }
