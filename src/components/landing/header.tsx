@@ -43,6 +43,7 @@ export function Header() {
 
           {/* Desktop CTA */}
           <div className="hidden md:flex items-center gap-3">
+            <LanguageSwitcher />
             <Button variant="ghost" size="sm" asChild>
               <a href="/salon-questionnaire">Get Started</a>
             </Button>
@@ -51,6 +52,18 @@ export function Header() {
                 @bookvsflow
               </a>
             </Button>
+          </div>
+
+          {/* Mobile right cluster */}
+          <div className="md:hidden flex items-center gap-1">
+            <LanguageSwitcher />
+            <button
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              className="p-2 text-foreground"
+              aria-label="Toggle menu"
+            >
+              {isMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+            </button>
           </div>
 
           {/* Mobile Menu Button */}
