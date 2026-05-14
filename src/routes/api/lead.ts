@@ -9,6 +9,7 @@ interface LeadData {
   ownerName?: string;
   phone?: string;
   email?: string;
+  telegram?: string;
   city?: string;
   businessType?: string;
   numberOfStaff?: string;
