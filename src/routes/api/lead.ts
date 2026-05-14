@@ -178,7 +178,6 @@ export const Route = createFileRoute("/api/lead")({
             "salonName",
             "ownerName",
             "phone",
-            "email",
             "city",
             "businessType",
             "numberOfStaff",
@@ -193,7 +192,15 @@ export const Route = createFileRoute("/api/lead")({
               );
             }
           }
-          if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email!)) {
+          const email = (data.email ?? "").trim();
+          const telegram = (data.telegram ?? "").trim();
+          if (!email && !telegram) {
+            return Response.json(
+              { error: "Provide at least an email or a Telegram username" },
+              { status: 400 },
+            );
+          }
+          if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
             return Response.json({ error: "Invalid email format" }, { status: 400 });
           }
 
