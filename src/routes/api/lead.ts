@@ -31,6 +31,7 @@ const LABELS: Record<keyof LeadData, string> = {
   ownerName: "Owner name",
   phone: "Phone",
   email: "Email",
+  telegram: "Telegram",
   city: "City",
   businessType: "Business type",
   numberOfStaff: "Number of staff",
