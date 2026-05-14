@@ -16,6 +16,7 @@ interface FormData {
   ownerName: string
   phone: string
   email: string
+  telegram: string
   city: string
   businessType: string
   numberOfStaff: string
@@ -89,6 +90,7 @@ export function SalonQuestionnaireForm() {
     ownerName: "",
     phone: "",
     email: "",
+    telegram: "",
     city: "",
     businessType: "",
     numberOfStaff: "",
@@ -118,7 +120,8 @@ export function SalonQuestionnaireForm() {
         salon_name: formData.salonName,
         owner_name: formData.ownerName,
         phone: formData.phone,
-        email: formData.email,
+        email: formData.email.trim() || null,
+        telegram: formData.telegram.trim() || null,
         city: formData.city,
         business_type: formData.businessType,
         number_of_staff: formData.numberOfStaff,
@@ -153,7 +156,9 @@ export function SalonQuestionnaireForm() {
     }
   }
 
-  const canProceedStep1 = formData.salonName && formData.ownerName && formData.phone && formData.email && formData.city
+  const hasEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email.trim())
+  const hasTelegram = formData.telegram.trim().length > 0
+  const canProceedStep1 = !!(formData.salonName && formData.ownerName && formData.phone && formData.city && (hasEmail || hasTelegram))
   const canProceedStep2 = formData.businessType && formData.numberOfStaff && formData.numberOfServices
   const canProceedStep3 = formData.whyNeedIt.trim().length > 3 && formData.businessPurpose.trim().length > 3 && formData.biggestChallenge && formData.monthlyClients
   const canSubmit = formData.preferredContact
@@ -230,27 +235,50 @@ export function SalonQuestionnaireForm() {
                   </div>
                 </div>
 
-                <div className="grid sm:grid-cols-2 gap-4">
-                  <div className="space-y-2">
-                    <Label htmlFor="phone">Phone Number *</Label>
-                    <Input
-                      id="phone"
-                      type="tel"
-                      placeholder="+1 (555) 000-0000"
-                      value={formData.phone}
-                      onChange={(e) => updateFormData("phone", e.target.value)}
-                    />
+                <div className="space-y-2">
+                  <Label htmlFor="phone">Phone Number *</Label>
+                  <Input
+                    id="phone"
+                    type="tel"
+                    placeholder="+1 (555) 000-0000"
+                    value={formData.phone}
+                    onChange={(e) => updateFormData("phone", e.target.value)}
+                  />
+                </div>
+
+                <div className="rounded-lg border border-border/60 bg-muted/30 p-4 space-y-4">
+                  <div>
+                    <p className="text-sm font-medium text-foreground">How should we reach you? *</p>
+                    <p className="text-xs text-muted-foreground mt-1">
+                      Provide at least one — email, Telegram, or both.
+                    </p>
                   </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="email">Email Address *</Label>
-                    <Input
-                      id="email"
-                      type="email"
-                      placeholder="hello@salon.com"
-                      value={formData.email}
-                      onChange={(e) => updateFormData("email", e.target.value)}
-                    />
+                  <div className="grid sm:grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                      <Label htmlFor="email">Email Address</Label>
+                      <Input
+                        id="email"
+                        type="email"
+                        placeholder="hello@salon.com"
+                        value={formData.email}
+                        onChange={(e) => updateFormData("email", e.target.value)}
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="telegram">Telegram</Label>
+                      <Input
+                        id="telegram"
+                        placeholder="@yourusername"
+                        value={formData.telegram}
+                        onChange={(e) => updateFormData("telegram", e.target.value)}
+                      />
+                    </div>
                   </div>
+                  {!hasEmail && !hasTelegram && (formData.email.length > 0 || formData.telegram.length > 0) && (
+                    <p className="text-xs text-destructive">
+                      Please enter a valid email or a Telegram username.
+                    </p>
+                  )}
                 </div>
 
                 <div className="space-y-2">

@@ -9,6 +9,7 @@ interface LeadData {
   ownerName?: string;
   phone?: string;
   email?: string;
+  telegram?: string;
   city?: string;
   businessType?: string;
   numberOfStaff?: string;
@@ -30,6 +31,7 @@ const LABELS: Record<keyof LeadData, string> = {
   ownerName: "Owner name",
   phone: "Phone",
   email: "Email",
+  telegram: "Telegram",
   city: "City",
   businessType: "Business type",
   numberOfStaff: "Number of staff",
@@ -137,7 +139,7 @@ async function sendViaGmail(data: LeadData): Promise<void> {
   const subject = `New Lead: ${data.salonName ?? "Unknown salon"} (${data.ownerName ?? "—"})`;
   const raw = buildRawEmail({
     to: RECIPIENT,
-    replyTo: data.email,
+    replyTo: data.email && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email) ? data.email : undefined,
     subject,
     html: buildHtml(data),
     text: buildPlain(data),
@@ -176,7 +178,6 @@ export const Route = createFileRoute("/api/lead")({
             "salonName",
             "ownerName",
             "phone",
-            "email",
             "city",
             "businessType",
             "numberOfStaff",
@@ -191,7 +192,15 @@ export const Route = createFileRoute("/api/lead")({
               );
             }
           }
-          if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email!)) {
+          const email = (data.email ?? "").trim();
+          const telegram = (data.telegram ?? "").trim();
+          if (!email && !telegram) {
+            return Response.json(
+              { error: "Provide at least an email or a Telegram username" },
+              { status: 400 },
+            );
+          }
+          if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
             return Response.json({ error: "Invalid email format" }, { status: 400 });
           }
 

@@ -23,7 +23,7 @@ export type Database = {
           city: string
           created_at: string
           current_booking_system: string | null
-          email: string
+          email: string | null
           email_sent: boolean | null
           id: string
           monthly_clients: string | null
@@ -35,6 +35,7 @@ export type Database = {
           phone: string
           preferred_contact: string
           salon_name: string
+          telegram: string | null
           use_online_booking: string | null
           why_need_it: string | null
         }
@@ -46,7 +47,7 @@ export type Database = {
           city: string
           created_at?: string
           current_booking_system?: string | null
-          email: string
+          email?: string | null
           email_sent?: boolean | null
           id?: string
           monthly_clients?: string | null
@@ -58,6 +59,7 @@ export type Database = {
           phone: string
           preferred_contact: string
           salon_name: string
+          telegram?: string | null
           use_online_booking?: string | null
           why_need_it?: string | null
         }
@@ -69,7 +71,7 @@ export type Database = {
           city?: string
           created_at?: string
           current_booking_system?: string | null
-          email?: string
+          email?: string | null
           email_sent?: boolean | null
           id?: string
           monthly_clients?: string | null
@@ -81,6 +83,7 @@ export type Database = {
           phone?: string
           preferred_contact?: string
           salon_name?: string
+          telegram?: string | null
           use_online_booking?: string | null
           why_need_it?: string | null
         }
