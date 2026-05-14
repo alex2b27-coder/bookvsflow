@@ -2,6 +2,7 @@ import { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import { Logo } from "@/components/brand/logo"
+import { LanguageSwitcher } from "@/components/landing/language-switcher"
 import { Menu, X } from "lucide-react"
 
 export function Header() {
