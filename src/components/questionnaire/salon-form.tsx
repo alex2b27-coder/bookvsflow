@@ -235,27 +235,50 @@ export function SalonQuestionnaireForm() {
                   </div>
                 </div>
 
-                <div className="grid sm:grid-cols-2 gap-4">
-                  <div className="space-y-2">
-                    <Label htmlFor="phone">Phone Number *</Label>
-                    <Input
-                      id="phone"
-                      type="tel"
-                      placeholder="+1 (555) 000-0000"
-                      value={formData.phone}
-                      onChange={(e) => updateFormData("phone", e.target.value)}
-                    />
+                <div className="space-y-2">
+                  <Label htmlFor="phone">Phone Number *</Label>
+                  <Input
+                    id="phone"
+                    type="tel"
+                    placeholder="+1 (555) 000-0000"
+                    value={formData.phone}
+                    onChange={(e) => updateFormData("phone", e.target.value)}
+                  />
+                </div>
+
+                <div className="rounded-lg border border-border/60 bg-muted/30 p-4 space-y-4">
+                  <div>
+                    <p className="text-sm font-medium text-foreground">How should we reach you? *</p>
+                    <p className="text-xs text-muted-foreground mt-1">
+                      Provide at least one — email, Telegram, or both.
+                    </p>
                   </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="email">Email Address *</Label>
-                    <Input
-                      id="email"
-                      type="email"
-                      placeholder="hello@salon.com"
-                      value={formData.email}
-                      onChange={(e) => updateFormData("email", e.target.value)}
-                    />
+                  <div className="grid sm:grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                      <Label htmlFor="email">Email Address</Label>
+                      <Input
+                        id="email"
+                        type="email"
+                        placeholder="hello@salon.com"
+                        value={formData.email}
+                        onChange={(e) => updateFormData("email", e.target.value)}
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="telegram">Telegram</Label>
+                      <Input
+                        id="telegram"
+                        placeholder="@yourusername"
+                        value={formData.telegram}
+                        onChange={(e) => updateFormData("telegram", e.target.value)}
+                      />
+                    </div>
                   </div>
+                  {!hasEmail && !hasTelegram && (formData.email.length > 0 || formData.telegram.length > 0) && (
+                    <p className="text-xs text-destructive">
+                      Please enter a valid email or a Telegram username.
+                    </p>
+                  )}
                 </div>
 
                 <div className="space-y-2">
