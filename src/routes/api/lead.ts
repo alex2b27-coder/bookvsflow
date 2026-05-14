@@ -139,7 +139,7 @@ async function sendViaGmail(data: LeadData): Promise<void> {
   const subject = `New Lead: ${data.salonName ?? "Unknown salon"} (${data.ownerName ?? "—"})`;
   const raw = buildRawEmail({
     to: RECIPIENT,
-    replyTo: data.email,
+    replyTo: data.email && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email) ? data.email : undefined,
     subject,
     html: buildHtml(data),
     text: buildPlain(data),
