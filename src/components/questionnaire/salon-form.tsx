@@ -156,7 +156,9 @@ export function SalonQuestionnaireForm() {
     }
   }
 
-  const canProceedStep1 = formData.salonName && formData.ownerName && formData.phone && formData.email && formData.city
+  const hasEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email.trim())
+  const hasTelegram = formData.telegram.trim().length > 0
+  const canProceedStep1 = !!(formData.salonName && formData.ownerName && formData.phone && formData.city && (hasEmail || hasTelegram))
   const canProceedStep2 = formData.businessType && formData.numberOfStaff && formData.numberOfServices
   const canProceedStep3 = formData.whyNeedIt.trim().length > 3 && formData.businessPurpose.trim().length > 3 && formData.biggestChallenge && formData.monthlyClients
   const canSubmit = formData.preferredContact
