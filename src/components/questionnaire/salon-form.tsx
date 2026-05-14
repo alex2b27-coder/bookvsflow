@@ -90,6 +90,7 @@ export function SalonQuestionnaireForm() {
     ownerName: "",
     phone: "",
     email: "",
+    telegram: "",
     city: "",
     businessType: "",
     numberOfStaff: "",
